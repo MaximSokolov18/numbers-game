@@ -1,0 +1,1 @@
+export {validInput} from './validInput';
