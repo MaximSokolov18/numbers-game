@@ -3,5 +3,5 @@ export const setValueToLocalStorage = <T>(value: T, key: string) => {
 }
 
 export const getValueToLocalStorage = (key: string) => {
-    return JSON.parse(localStorage.getItem(key))?.value;
+    return JSON.parse(localStorage.getItem(key) ?? '{value: null}')?.value;
 }

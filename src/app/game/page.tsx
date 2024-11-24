@@ -1,6 +1,6 @@
 "use client";
 
-import React, {ChangeEventHandler, FormEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEventHandler, FormEvent, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import Confetti from 'react-confetti'
 import {clsx} from 'clsx';
 
@@ -49,7 +49,7 @@ export default function Game() {
         if (!hiddenNumbers?.length) {
             setRandomHiddenNumbers();
         }
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onChangeInput = useCallback((e: FormEvent<HTMLInputElement>) => {setInputValue(e.currentTarget.value)}, []);
     const onBlurInput: ChangeEventHandler<HTMLInputElement> = useCallback((e: FormEvent<HTMLInputElement>) => {
@@ -103,7 +103,7 @@ export default function Game() {
         setValueToLocalStorage<Array<ResultOfAttempt>>([], NUMBERS_GAME_ATTEMPTS);
 
         setRandomHiddenNumbers();
-    }, []);
+    }, [setRandomHiddenNumbers]);
 
     const isNumberGuessed = prevInputValue === hiddenNumbers.join('');
 
@@ -133,14 +133,14 @@ export default function Game() {
             </div>
             <div className="flex justify-center">
                 <AttemptsTable>
-                    {resultOfAttempts?.map(({guessed, correctPlaces, inputNumber, numberOfAttempt}, index) => (
+                    {resultOfAttempts?.map(({guessed, correctPlaces, inputNumber}, index) => (
                         <tr key={index} className="even:bg-gray-100 odd:bg-white">
                             <td className="pl-2">{index + 1}</td>
                             <td className="pl-2">{inputNumber}</td>
                             <td className="pl-2">{guessed}/4</td>
                             <td className="pl-2">{correctPlaces}/4</td>
                         </tr>
-                    )) as Element[]}
+                    )) as ReactNode[]}
                 </AttemptsTable>
             </div>
         </div>

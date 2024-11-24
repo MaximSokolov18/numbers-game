@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 type Props = {
-    children?: Element[],
+    children?: ReactNode[],
 };
 
 export const AttemptsTable = ({children}: Props) => (

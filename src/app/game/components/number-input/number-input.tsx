@@ -4,6 +4,7 @@ type Props = {
     onBlur: ChangeEventHandler<HTMLInputElement>,
     onChange: ChangeEventHandler<HTMLInputElement>,
     value: string,
+    error?: string,
 };
 
 export const NumberInput = ({onBlur, onChange, error, value}: Props) => {
