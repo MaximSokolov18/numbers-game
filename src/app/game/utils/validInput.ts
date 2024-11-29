@@ -3,24 +3,22 @@ type ValidResult = {
     isValid: boolean,
 };
 
-export const validInput = (newInputValue: string, prevInputValue?: string): ValidResult => {
+export const validInput = (newInputValue: Array<string>, prevInputValue?: string): ValidResult => {
     const validResult: ValidResult = {
         isValid: false,
     };
 
-    const inputNumbers = newInputValue.split('');
-
-    if (inputNumbers.length < 4) {
+    if (newInputValue.length < 4) {
         validResult.error = 'Input should contain 4 numbers';
         return validResult;
     }
 
-    if (new Set(inputNumbers).size != 4) {
+    if (new Set(newInputValue).size != 4) {
         validResult.error = 'All numbers should be unique';
         return validResult;
     }
 
-    if (prevInputValue === newInputValue) {
+    if (prevInputValue === newInputValue.join('')) {
         validResult.error = 'It was your prev attempts';
         return validResult;
     }
