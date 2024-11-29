@@ -25,8 +25,8 @@ export const NumbersController = ({onChange, maxLength, allValues}: Props) => {
         const isValid = maxLength > allValues.filter(v => v).length
 
         if (numberElement.classList.contains('number')) {
-            const lastValue = numberElement.textContent;
-            let changeConfig: ChangeConfig = {
+            const lastValue = numberElement.textContent ?? '';
+            const changeConfig: ChangeConfig = {
                 lastValue,
                 changeStatus: ChangeStatus.NONE,
             };

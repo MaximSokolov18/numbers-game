@@ -1,2 +1,2 @@
 export {NumbersController} from './numbers-controller';
-export {ChangeConfig} from './numbers-controller';
+export type {ChangeConfig} from './numbers-controller';

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
+import React, {ChangeEvent} from 'react';
 
 type Props = {
     onBlur: (e: ChangeEvent<HTMLInputElement>, inputIndex: number) => void,
