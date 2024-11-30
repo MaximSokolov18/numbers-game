@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import Head from 'next/head'
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -9,9 +10,12 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en">
-            <body>
-                {children}
-            </body>
+        <Head>
+            <meta name="google-site-verification" content="7Qxh9LoHKMdoTTs2DEvMAjrzpehzFEZN4U4YFtk9Djk"/>
+        </Head>
+        <body>
+        {children}
+        </body>
         </html>
     );
 }
