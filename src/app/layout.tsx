@@ -17,17 +17,16 @@ export const metadata: Metadata = {
     },
     title: 'Numbers Game',
     description: 'It`s simple numbers game.',
-    other: {
-        'google-site-verification': '7Qxh9LoHKMdoTTs2DEvMAjrzpehzFEZN4U4YFtk9Djk'
-    }
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en">
-        <body>
-        {children}
-        </body>
+            <body>
+                <main>
+                    {children}
+                </main>
+            </body>
         </html>
     );
 }
