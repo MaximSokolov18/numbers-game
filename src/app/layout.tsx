@@ -2,21 +2,15 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-    robots: {
-        index: false,
-        follow: true,
-        nocache: true,
-        googleBot: {
-            index: true,
-            follow: false,
-            noimageindex: true,
-            'max-video-preview': -1,
-            'max-image-preview': 'large',
-            'max-snippet': -1,
-        },
+    metadataBase: new URL('https://www.numbers-game.website/'),
+    keywords: ['numbers game', 'numbers game my game', 'numbers game play online', 'game numbers', 'NumGame'],
+    title: {
+        default: 'Numbers Game',
+        template: '%s | Numbers Game',
     },
-    title: 'Numbers Game',
-    description: 'It`s simple numbers game.',
+    openGraph: {
+        description: 'Test your skills and challenge your mind with Numbers Game! Enjoy a fun, interactive experience that combines strategy and quick thinking. Whether you\'re sharpening your math abilities or simply looking for a way to relax and compete with friends, Numbers Game offers exciting gameplay for all ages. Dive into puzzles, climb leaderboards, and prove you\'re a numbers master!',
+    }
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
