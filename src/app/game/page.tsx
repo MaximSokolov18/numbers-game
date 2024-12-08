@@ -7,7 +7,7 @@ import {clsx} from 'clsx';
 import {NumberInput} from './components/number-input';
 import {AttemptsTable} from './components/attempts-table';
 import {ChangeConfig, NumbersController} from './modules/numbers-controller';
-import {getValueToLocalStorage, setValueToLocalStorage} from '../utils';
+import {getValueFromLocalStorage, setValueToLocalStorage} from '../utils';
 import {validInput} from './utils';
 import {ChangeStatus} from '@/app/game/modules/numbers-controller/numbers-controller';
 
@@ -19,7 +19,7 @@ type ResultOfAttempt = {
 }
 
 const NUMBERS_GAME_HIDDEN_NUMBERS = 'NUMBERS_GAME_HIDDEN_NUMBERS';
-const hiddenNumbersDefault = (getValueToLocalStorage(NUMBERS_GAME_HIDDEN_NUMBERS) ?? []) as HiddenNumbers;
+const hiddenNumbersDefault = (getValueFromLocalStorage(NUMBERS_GAME_HIDDEN_NUMBERS) ?? []) as HiddenNumbers;
 const NUMBERS_GAME_ATTEMPTS = 'NUMBERS_GAME_ATTEMPTS';
 const DEFAULT_INPUT_VALUES = Array(4).fill('');
 
@@ -47,7 +47,7 @@ export default function Game() {
     }, []);
 
     useEffect(() => {
-        setResultOfAttempts((getValueToLocalStorage(NUMBERS_GAME_ATTEMPTS) ?? []) as Array<ResultOfAttempt>)
+        setResultOfAttempts((getValueFromLocalStorage(NUMBERS_GAME_ATTEMPTS) ?? []) as Array<ResultOfAttempt>)
 
         if (!hiddenNumbers?.length) {
             setRandomHiddenNumbers();

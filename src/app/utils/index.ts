@@ -1,1 +1,1 @@
-export {setValueToLocalStorage, getValueToLocalStorage} from './localStorageManager';
+export {setValueToLocalStorage, getValueFromLocalStorage} from './localStorageManager';

@@ -1,6 +1,6 @@
-export const getValueToLocalStorage = (key: string) => {
+export const getValueFromLocalStorage = (key: string) => {
     try {
-        return JSON.parse(localStorage.getItem(key) ?? '{value: null}')?.value;
+        return JSON.parse(localStorage.getItem(key) ?? '{"value": null}')?.value;
     } catch (e) {
         console.error(e);
         return null
