@@ -43,7 +43,7 @@ export const NumbersController = ({onChange, maxLength, allValues}: Props) => {
                 onChange(changeConfig);
             }
         }
-    }, [allValues, maxLength]);
+    }, [allValues, maxLength, onChange]);
 
     return (
         <div className="flex justify-between" onClick={onClick}>
