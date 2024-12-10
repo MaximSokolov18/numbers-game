@@ -1,22 +1,23 @@
 import type {Metadata} from 'next';
+import {Inter} from 'next/font/google'
 import './globals.css';
+
+const inter = Inter({subsets: ['latin']});
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://www.numbers-game.website/'),
-    keywords: ['numbers game', 'numbers game my game', 'numbers game play online', 'game numbers', 'NumGame'],
+    keywords: ['brain teasers', 'brain exercises', 'brain workout', 'fun brain games', 'number game'],
     title: {
-        default: 'Numbers Game',
+        default: 'Number Game | Fun Brain Teasers and Exercises to Sharpen Your Mind',
         template: '%s | Numbers Game',
     },
-    openGraph: {
-        description: 'Test your skills and challenge your mind with Numbers Game! Enjoy a fun, interactive experience that combines strategy and quick thinking. Whether you\'re sharpening your math abilities or simply looking for a way to relax and compete with friends, Numbers Game offers exciting gameplay for all ages. Dive into puzzles, climb leaderboards, and prove you\'re a numbers master!',
-    }
+    description: 'Challenge your mind with fun brain games, teasers, and exercises. Boost your focus, memory, and problem-solving skills with engaging number games and brain workouts.',
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en">
-            <body>
+            <body className={inter.className}>
                 <main>
                     {children}
                 </main>
