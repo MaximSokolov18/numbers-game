@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/Image';
+import Image from 'next/image'
 import Link from 'next/link';
 import brainTeasers from '@/assets/images/brain-teasers.jpg';
 
@@ -14,7 +14,8 @@ export default function Home () {
                     At Number Game, we believe in the power of play to improve mental fitness. Our collection of brain
                     teasers, brain exercises, and number games is designed to challenge your brain and help you enhance
                     your
-                    cognitive skills. Whether you're a beginner or an experienced puzzle solver, you'll find exciting
+                    cognitive skills. Whether you&apos;re a beginner or an experienced puzzle solver, you&apos;ll find
+                    exciting
                     games
                     to boost your focus, memory, and problem-solving abilities.
                 </p>
