@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
-import brainTeasers from '@/assets/images/brain-teasers.jpg';
+import brainTeasers from '@/assets/images/brain-teasers.png';
 
 export default function Home () {
     return (
