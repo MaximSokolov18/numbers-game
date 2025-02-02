@@ -1,17 +1,16 @@
 "use client";
 
-import React, {FormEvent, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import Confetti from 'react-confetti';
 import {clsx} from 'clsx';
 
 import {NumberInput} from './components/number-input';
 import {AttemptsTable} from './components/attempts-table';
 import {ChangeConfig, NumbersController} from './modules/numbers-controller';
-import {getValueFromLocalStorage, setValueToLocalStorage} from '../utils';
+import {ArrayNumbers, getRandomNumbers, getValueFromLocalStorage, setValueToLocalStorage} from '../utils';
 import {validInput} from './utils';
 import {ChangeStatus} from '@/app/game/modules/numbers-controller/numbers-controller';
 
-type HiddenNumbers = Array<number>;
 type ResultOfAttempt = {
     guessed: number,
     correctPlaces: number,
@@ -19,12 +18,12 @@ type ResultOfAttempt = {
 }
 
 const NUMBERS_GAME_HIDDEN_NUMBERS = 'NUMBERS_GAME_HIDDEN_NUMBERS';
-const hiddenNumbersDefault = (getValueFromLocalStorage(NUMBERS_GAME_HIDDEN_NUMBERS) ?? []) as HiddenNumbers;
+const hiddenNumbersDefault = (getValueFromLocalStorage(NUMBERS_GAME_HIDDEN_NUMBERS) ?? []) as ArrayNumbers;
 const NUMBERS_GAME_ATTEMPTS = 'NUMBERS_GAME_ATTEMPTS';
 const DEFAULT_INPUT_VALUES = Array(4).fill('');
 
 export default function Game() {
-    const [hiddenNumbers, setHiddenNumbers] = useState<HiddenNumbers>(hiddenNumbersDefault);
+    const [hiddenNumbers, setHiddenNumbers] = useState<ArrayNumbers>(hiddenNumbersDefault);
     const [inputValues, setInputValues] = useState<Array<string>>(DEFAULT_INPUT_VALUES);
     const [resultOfAttempts, setResultOfAttempts] = useState<Array<ResultOfAttempt>>([]);
     const [error, setError] = useState<string>();
@@ -32,18 +31,10 @@ export default function Game() {
     const prevInputValue = useMemo(() => resultOfAttempts?.at(-1)?.inputNumber, [resultOfAttempts]);
 
     const setRandomHiddenNumbers = useCallback(() => {
-        const digits: HiddenNumbers = [];
-
-        while (digits.length < 4) {
-            const randomDigit = Math.floor(Math.random() * 10);
-
-            if (!digits.includes(randomDigit)) {
-                digits.push(randomDigit);
-            }
-        }
+        const digits = getRandomNumbers();
 
         setHiddenNumbers(digits);
-        setValueToLocalStorage<HiddenNumbers>(digits, NUMBERS_GAME_HIDDEN_NUMBERS);
+        setValueToLocalStorage<ArrayNumbers>(digits, NUMBERS_GAME_HIDDEN_NUMBERS);
     }, []);
 
     useEffect(() => {
@@ -54,27 +45,8 @@ export default function Game() {
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const onChangeInput = useCallback((e: FormEvent<HTMLInputElement>, index: number) => {
-        const newInputValue = e.currentTarget.value;
-
-        setInputValues(currValues => currValues.map((v, i) => i === index ? newInputValue : v));
-    }, []);
-    const onBlurInput = useCallback((e: FormEvent<HTMLInputElement>, index: number) => {
-        const newInputValue = e.currentTarget.value;
-        const newValues = inputValues.map((v, i) => i === index ? newInputValue : v)
-
-        const validResult = validInput(newValues, prevInputValue);
-        if (!validResult.isValid) {
-            setError(validResult.error);
-            return;
-        }
-
-        setInputValues(newValues);
-        setError('');
-    }, [prevInputValue, inputValues])
-
     const checkNumber = useCallback(() => {
-        const validResult = validInput(inputValues, prevInputValue);
+        const validResult = validInput(inputValues.filter(v => v), prevInputValue);
         if (!validResult.isValid) {
             setError(validResult.error);
             return;
@@ -103,6 +75,7 @@ export default function Game() {
         setValueToLocalStorage<Array<ResultOfAttempt>>(newResultOfAttempts, NUMBERS_GAME_ATTEMPTS);
 
         setInputValues(DEFAULT_INPUT_VALUES);
+        setError('');
     }, [inputValues, hiddenNumbers, resultOfAttempts, prevInputValue]);
 
     const onRestart = useCallback(() => {
@@ -134,14 +107,20 @@ export default function Game() {
     return (
         <div className="flex flex-col gap-4">
             {isNumberGuessed ? <Confetti/> : null}
-            <NumberInput
-                onChange={onChangeInput}
-                values={inputValues}
-                onBlur={onBlurInput}
-                error={error}
-                maxLength={4}
-            />
-            <div className="flex gap-4 mb-12">
+            <NumberInput values={inputValues} error={error}/>
+            <div className="flex justify-center">
+                <AttemptsTable>
+                    {resultOfAttempts?.map(({guessed, correctPlaces, inputNumber}, index) => (
+                        <tr key={index} className="even:bg-gray-100 odd:bg-white dark:even:bg-orange-200 dark:odd:bg-orange-300">
+                            <td className="pl-2">{index + 1}</td>
+                            <td className="pl-2">{inputNumber}</td>
+                            <td className="pl-2">{guessed}/4</td>
+                            <td className="pl-2">{correctPlaces}/4</td>
+                        </tr>
+                    )) as ReactNode[]}
+                </AttemptsTable>
+            </div>
+            <div className="flex justify-center gap-4">
                 <button
                     className={clsx('border border-black rounded-md px-4 py-2 w-max', {
                         'border-zinc-500 text-zinc-500': isNumberGuessed
@@ -155,18 +134,6 @@ export default function Game() {
                     onClick={onRestart}>
                     Restart
                 </button>
-            </div>
-            <div className="flex justify-center">
-                <AttemptsTable>
-                    {resultOfAttempts?.map(({guessed, correctPlaces, inputNumber}, index) => (
-                        <tr key={index} className="even:bg-gray-100 odd:bg-white">
-                            <td className="pl-2">{index + 1}</td>
-                            <td className="pl-2">{inputNumber}</td>
-                            <td className="pl-2">{guessed}/4</td>
-                            <td className="pl-2">{correctPlaces}/4</td>
-                        </tr>
-                    )) as ReactNode[]}
-                </AttemptsTable>
             </div>
             <NumbersController maxLength={4} allValues={inputValues} onChange={onChangeNumberController}/>
         </div>

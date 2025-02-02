@@ -1,31 +1,22 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 
 type Props = {
-    onBlur: (e: ChangeEvent<HTMLInputElement>, inputIndex: number) => void,
-    onChange: (e: ChangeEvent<HTMLInputElement>, inputIndex: number) => void,
     values: Array<string>,
-    maxLength: number,
     error?: string,
 };
 
-export const NumberInput = ({onBlur, onChange, error, values, maxLength}: Props) => {
+export const NumberInput = ({error, values}: Props) => {
     return (
-        // TODO: style this input
-        <div className="relative pt-4">
-            <label>Your number</label>
-            {Array(maxLength).fill('').map((_, index) => (
-                <input
-                    key={index}
-                    onChange={e => onChange(e, index)}
-                    value={values[index] ?? ''}
-                    onBlur={e => onBlur(e, index)}
-                    type="text"
-                    pattern="\d*"
-                    maxLength={1}
-                    name={`your-${index}-number`}
-                    className="w-4"
-                />
-            ))}
+        <div className="flex flex-col gap-2 items-center">
+            <div className="flex justify-center pt-4 w-full">
+                <div className="flex gap-2">
+                    {values.map((item, index) => (
+                        <span key={index} className="w-5 font-semibold text-3xl dark:text-orange-500">
+                            {item || '?'}
+                        </span>
+                    ))}
+                </div>
+            </div>
             <div className="text-red-600 h-6">{error ?? null}</div>
         </div>
     );

@@ -46,11 +46,12 @@ export const NumbersController = ({onChange, maxLength, allValues}: Props) => {
     }, [allValues, maxLength, onChange]);
 
     return (
-        <div className="flex justify-between" onClick={onClick}>
+        <div className="grid grid-cols-5 gap-6" onClick={onClick}>
             {ALL_DIGITS_NUMBERS.map(number => (
                 <div key={number} className={clsx(
-                    'number rounded-lg border border-black py-3 px-2 text-xl font-bold cursor-pointer', {
-                        'border border-zinc-200 text-zinc-200': allValues.includes(number.toString()),
+                    'number rounded-lg py-3 text-xl font-bold cursor-pointer text-center', {
+                        'bg-orange-400': !allValues.includes(number.toString()),
+                        'outline-none bg-orange-500 ring-4 ring-orange-300 dark:ring-orange-700': allValues.includes(number.toString()),
                     }
                 )}>
                     {number}
