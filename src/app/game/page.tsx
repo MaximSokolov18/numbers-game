@@ -82,6 +82,7 @@ export default function Game() {
         setInputValues(DEFAULT_INPUT_VALUES);
         setResultOfAttempts([]);
         setValueToLocalStorage<Array<ResultOfAttempt>>([], NUMBERS_GAME_ATTEMPTS);
+        setError('');
 
         setRandomHiddenNumbers();
     };
@@ -122,15 +123,15 @@ export default function Game() {
             </div>
             <div className="flex justify-center gap-4">
                 <button
-                    className={clsx('border border-black rounded-md px-4 py-2 w-max', {
-                        'border-zinc-500 text-zinc-500': isNumberGuessed
+                    className={clsx('border border-black rounded-md px-4 py-2 w-max dark:border-amber-600 dark:text-amber-600', {
+                        'border-zinc-500 text-zinc-500 dark:border-amber-600/50 dark:text-amber-600/50': isNumberGuessed
                     })}
                     onClick={checkNumber}
                     disabled={isNumberGuessed}>
                     Check number
                 </button>
                 <button
-                    className="border border-black rounded-md px-4 py-2 w-max"
+                    className="border border-black rounded-md px-4 py-2 w-max dark:border-amber-600 dark:text-amber-600"
                     onClick={onRestart}>
                     Restart
                 </button>
