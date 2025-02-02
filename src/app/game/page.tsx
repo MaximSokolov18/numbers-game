@@ -1,6 +1,6 @@
 "use client";
 
-import React, {ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import Confetti from 'react-confetti';
 import {clsx} from 'clsx';
 
@@ -28,14 +28,14 @@ export default function Game() {
     const [resultOfAttempts, setResultOfAttempts] = useState<Array<ResultOfAttempt>>([]);
     const [error, setError] = useState<string>();
 
-    const prevInputValue = useMemo(() => resultOfAttempts?.at(-1)?.inputNumber, [resultOfAttempts]);
+    const prevInputValue = resultOfAttempts?.at(-1)?.inputNumber;
 
-    const setRandomHiddenNumbers = useCallback(() => {
+    const setRandomHiddenNumbers = () => {
         const digits = getRandomNumbers();
 
         setHiddenNumbers(digits);
         setValueToLocalStorage<ArrayNumbers>(digits, NUMBERS_GAME_HIDDEN_NUMBERS);
-    }, []);
+    };
 
     useEffect(() => {
         setResultOfAttempts((getValueFromLocalStorage(NUMBERS_GAME_ATTEMPTS) ?? []) as Array<ResultOfAttempt>)
@@ -45,7 +45,7 @@ export default function Game() {
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const checkNumber = useCallback(() => {
+    const checkNumber = () => {
         const validResult = validInput(inputValues.filter(v => v), prevInputValue);
         if (!validResult.isValid) {
             setError(validResult.error);
@@ -76,19 +76,19 @@ export default function Game() {
 
         setInputValues(DEFAULT_INPUT_VALUES);
         setError('');
-    }, [inputValues, hiddenNumbers, resultOfAttempts, prevInputValue]);
+    };
 
-    const onRestart = useCallback(() => {
+    const onRestart = () => {
         setInputValues(DEFAULT_INPUT_VALUES);
         setResultOfAttempts([]);
         setValueToLocalStorage<Array<ResultOfAttempt>>([], NUMBERS_GAME_ATTEMPTS);
 
         setRandomHiddenNumbers();
-    }, [setRandomHiddenNumbers]);
+    };
 
     const isNumberGuessed = prevInputValue === hiddenNumbers.join('');
 
-    const onChangeNumberController = useCallback(({lastValue, changeStatus}: ChangeConfig) => {
+    const onChangeNumberController = ({lastValue, changeStatus}: ChangeConfig) => {
         const newInputValues = [...inputValues];
 
         if (changeStatus === ChangeStatus.REMOVE) {
@@ -102,7 +102,7 @@ export default function Game() {
         }
 
         setInputValues(newInputValues);
-    }, [inputValues]);
+    };
 
     return (
         <div className="flex flex-col gap-4">

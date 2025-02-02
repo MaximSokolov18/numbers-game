@@ -1,4 +1,4 @@
-import React, {MouseEvent, useCallback,} from 'react';
+import React, {MouseEvent} from 'react';
 import {clsx} from 'clsx';
 
 const ALL_DIGITS_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -20,7 +20,7 @@ type Props = {
 }
 
 export const NumbersController = ({onChange, maxLength, allValues}: Props) => {
-    const onClick = useCallback((e: MouseEvent) => {
+    const onClick = (e: MouseEvent) => {
         const numberElement = e.target as HTMLDivElement;
         const isValid = maxLength > allValues.filter(v => v).length
 
@@ -43,7 +43,7 @@ export const NumbersController = ({onChange, maxLength, allValues}: Props) => {
                 onChange(changeConfig);
             }
         }
-    }, [allValues, maxLength, onChange]);
+    };
 
     return (
         <div className="grid grid-cols-5 gap-6" onClick={onClick}>
